@@ -25,7 +25,8 @@ public enum GameEvent
     OnCallDice,
     
     //Doors
-    OnDoorOpen
+    OnDoorOpen,
+    OnDoorClose
 }
 public class EventManager
 {
