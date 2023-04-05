@@ -6,4 +6,5 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public bool isInvulnerable;
+    public bool playerCanSwing;
 }

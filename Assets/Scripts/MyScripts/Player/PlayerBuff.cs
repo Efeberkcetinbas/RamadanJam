@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using StarterAssets;
 public class PlayerBuff : MonoBehaviour
 {
     public GameData gameData;
+    public PlayerData playerData;
+    public ThirdPersonController thirdPersonController;
+
+    [Header("Buffs")]
+    public GameObject Sword;
+
     private void OnEnable() 
     {
         EventManager.AddHandler(GameEvent.OnSwordActive,OnSwordActive);
@@ -39,16 +45,23 @@ public class PlayerBuff : MonoBehaviour
     void OnSwordActive()
     {
         Debug.Log("SWORD ACTIVE");
+        playerData.playerCanSwing=true;
+        Sword.SetActive(true);
+        //ParticleEffect
+        Sword.SetActive(true);
     }
 
     void OnInvulnerable()
     {
         Debug.Log("SHIELD ACTIVE");
+        playerData.isInvulnerable=true;
     }
 
     void OnSpeedUp()
     {
         Debug.Log("SPEED UP!");
+        thirdPersonController.SprintSpeed=25;
+        
     }
 
     void OnPassThroughDoors()
@@ -59,17 +72,20 @@ public class PlayerBuff : MonoBehaviour
     void OnTimeStop()
     {
         Debug.Log("TIME IS STOP");
-        //gameData.timerIsRunning=false;
+        gameData.stopEnemies=true;
     }
 
     void OnSwordDeActive()
     {
         Debug.Log("SWORD DEACTIVE");
+        playerData.playerCanSwing=false;
+        Sword.SetActive(false);
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }
 
     void OnVulnerable()
     {
+        playerData.isInvulnerable=false;
         Debug.Log("SHIELD DEACTIVE");
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }
@@ -77,6 +93,7 @@ public class PlayerBuff : MonoBehaviour
     void OnSpeedNormal()
     {
         Debug.Log("SPEED NORMAL");
+        thirdPersonController.SprintSpeed=10;
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }
 
@@ -90,6 +107,9 @@ public class PlayerBuff : MonoBehaviour
     {
         Debug.Log("TIME IS CONTINUE");
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
-        //gameData.timerIsRunning=false;
+        gameData.stopEnemies=false;
     }
+
+    
+    
 }

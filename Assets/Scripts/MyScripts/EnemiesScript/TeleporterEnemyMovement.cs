@@ -28,7 +28,7 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
 
     private void Update() 
     {
-        if(gameData.timerIsRunning)
+        if(!gameData.stopEnemies)
         {
             timer+=Time.deltaTime;
             if(timer>passedTimer)

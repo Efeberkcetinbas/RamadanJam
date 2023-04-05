@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class FollowerEnemyTrigger : Obstacable
 {
+    public PlayerData playerData;
     internal override void DoAction(PlayerTrigger player)
     {
-        Debug.Log("ATTACK PLAYER");
+        if(!playerData.isInvulnerable)
+        {
+            Debug.Log("DAMAGE TO PLAYER");
+        }
     }
 }

@@ -13,6 +13,9 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
 
     public LayerMask whatIsGround, whatIsPlayer;
 
+    private Animator animator;
+    private List<string> resetParameters=new List<string>();
+
 
     //Patroling
     public Vector3 walkPoint;
@@ -34,11 +37,12 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        animator=GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if(gameData.timerIsRunning)
+        if(!gameData.stopEnemies)
             Movement();
     }
 
@@ -55,12 +59,17 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
 
     private void Patroling()
     {
+        animator.SetBool("Idle",true);
+        animator.SetBool("Run",false);
+        animator.SetBool("Attack",false);
+
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
@@ -81,17 +90,25 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        animator.SetBool("Run",true);
+        animator.SetBool("Attack",false);
+        animator.SetBool("Idle",false);
     }
 
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
+        animator.SetBool("Attack",true);
+        animator.SetBool("Run",false);
+        animator.SetBool("Idle",false);
 
         transform.LookAt(player);
+        Debug.Log("ATTACK ATTACK");
 
         if (!alreadyAttacked)
         {
+            
             ///Attack code here
             /*Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
@@ -114,6 +131,8 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
+
+    
 
   
 }

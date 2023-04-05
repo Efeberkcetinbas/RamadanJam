@@ -1,23 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class DoorButtonTrigger : Obstacable
+public class DoorButtonTrigger : MonoBehaviour
 {
     public int Id;
 
-    public DoorButtonTrigger()
+
+    private void OnTriggerEnter(Collider other) 
     {
-        canDamageToPlayer=false;
+        if(other.CompareTag("Enemy") || other.CompareTag("Player"))
+            EventManager.BroadcastId(GameEvent.OnDoorOpen,Id);
     }
 
-    internal override void DoAction(PlayerTrigger player)
+    private void OnTriggerExit(Collider other) 
     {
-        EventManager.BroadcastId(GameEvent.OnDoorOpen,Id);
-    }
-
-    internal override void InteractionExit(PlayerTrigger player)
-    {
-        EventManager.BroadcastId(GameEvent.OnDoorClose,Id);
+        if(other.CompareTag("Enemy") || other.CompareTag("Player"))
+            EventManager.BroadcastId(GameEvent.OnDoorClose,Id);
+        
     }
 
     

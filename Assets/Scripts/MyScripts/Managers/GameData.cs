@@ -7,5 +7,6 @@ public class GameData : ScriptableObject
 {
     public float RemainingTime;
     public bool timerIsRunning=false;
+    public bool stopEnemies=false;
     public int startBuffTime,repeatBuffTime;
 }
