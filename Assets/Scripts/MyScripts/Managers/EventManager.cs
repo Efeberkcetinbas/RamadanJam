@@ -21,6 +21,7 @@ public enum GameEvent
 
     //Game
     OnDeath,
+    OnSuccess,
     OnUpdateUI,
     OnCallDice,
     

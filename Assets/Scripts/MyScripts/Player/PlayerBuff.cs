@@ -10,7 +10,7 @@ public class PlayerBuff : MonoBehaviour
     public ThirdPersonController thirdPersonController;
 
     [Header("Buffs")]
-    public List<BoxCollider> SpecialWalls=new List<BoxCollider>();
+    public List<MeshCollider> SpecialWalls=new List<MeshCollider>();
     public GameObject fireParticle;
     public ParticleSystem[] speedUpParticle;
     public ParticleSystem timeStopParticle;
@@ -64,7 +64,7 @@ public class PlayerBuff : MonoBehaviour
         Debug.Log("FIRE ACTIVE");
         fireParticle.SetActive(true);
         fireParticle.transform.DOScale(new Vector3(4,4,4),0.4f).OnComplete(()=>fireParticle.transform.DOScale(new Vector3(2,2,2),0.5f));
-        
+        playerData.isInvulnerable=true;
         //ParticleEffect
     }
 
@@ -84,6 +84,7 @@ public class PlayerBuff : MonoBehaviour
             speedUpParticle[i].Play();
         }
         thirdPersonController.SprintSpeed=25;
+        playerData.isInvulnerable=true;
         
     }
 
@@ -92,6 +93,7 @@ public class PlayerBuff : MonoBehaviour
         Debug.Log("PASS THROUGH DOORS");
         for (int i = 0; i < SpecialWalls.Count; i++)
         {
+            SpecialWalls[i].convex=true;
             SpecialWalls[i].isTrigger=true;
         }
     }
@@ -109,6 +111,7 @@ public class PlayerBuff : MonoBehaviour
         fireParticle.transform.DOScale(new Vector3(0.1f,0.1f,0.1f),0.2f).OnComplete(()=>{
             fireParticle.SetActive(false);
         });
+        playerData.isInvulnerable=false;
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }
 
@@ -130,6 +133,7 @@ public class PlayerBuff : MonoBehaviour
         }
         thirdPersonController.SprintSpeed=10;
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
+        playerData.isInvulnerable=false;
     }
 
     void OnPassNotThroughDoors()
@@ -138,6 +142,7 @@ public class PlayerBuff : MonoBehaviour
         for (int i = 0; i < SpecialWalls.Count; i++)
         {
             SpecialWalls[i].isTrigger=false;
+            SpecialWalls[i].convex=false;
         }
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }

@@ -13,4 +13,3 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   isInvulnerable: 0
-  playerCanSwing: 0

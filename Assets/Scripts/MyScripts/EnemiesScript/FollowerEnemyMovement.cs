@@ -150,7 +150,6 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         animator.SetBool("Idle",false);
 
         transform.LookAt(player);
-        Debug.Log("ATTACK ATTACK");
 
         if (!alreadyAttacked)
         {

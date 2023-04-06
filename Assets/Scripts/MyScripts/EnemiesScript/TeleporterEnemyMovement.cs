@@ -24,6 +24,7 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
         index=Rooms.Count;   
     }
 
+
     private void Update() 
     {
         if(!gameData.stopEnemies)
@@ -48,7 +49,7 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
         RandomPos();
         //animator.SetBool("Travel",true);
         yield return new WaitForSeconds(1);
-        PlayParticleEffect();
+        //PlayParticleEffect();
         yield return new WaitForSeconds(2);
         transform.DOScale(new Vector3(0.1f,0.1f,0.1f),0.25f).OnComplete(()=>{
             Movement();
@@ -57,15 +58,15 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
     public void Movement()
     {
         //Sadece sahnedeki groudlarin uzerinde olsun.
-        transform.position=Rooms[randomPos].transform.position;
+        transform.localPosition=Rooms[randomPos].transform.localPosition;
         //animator.SetBool("Travel",false);
         transform.DOScale(new Vector3(1,1,1),0.3f);
     }
 
     public void PlayParticleEffect()
     {
-        Instantiate(PortalEffect,new Vector3(Rooms[randomPos].transform.position.x,
-        Rooms[randomPos].transform.position.y+1,Rooms[randomPos].transform.position.z),Rooms[randomPos].transform.rotation);
+        Instantiate(PortalEffect,new Vector3(Rooms[randomPos].transform.localPosition.x,
+        Rooms[randomPos].transform.localPosition.y+1,Rooms[randomPos].transform.localPosition.z),Rooms[randomPos].transform.localRotation);
     }
 
     

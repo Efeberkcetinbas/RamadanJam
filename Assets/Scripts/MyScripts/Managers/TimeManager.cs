@@ -11,7 +11,7 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-        gameData.RemainingTime=420;
+        gameData.RemainingTime=600;
         gameData.timerIsRunning = true;
     }
 
@@ -30,7 +30,10 @@ public class TimeManager : MonoBehaviour
                 Debug.Log("Time has run out!");
                 gameData.RemainingTime = 0;
                 gameData.timerIsRunning = false;
+                DisplayTime(gameData.RemainingTime);
+                EventManager.Broadcast(GameEvent.OnDeath);
                 Time.timeScale = 0f;
+                EventManager.Broadcast(GameEvent.OnDeath);
                 //bu durumda ise ana menuye dönücek.
             }
         }

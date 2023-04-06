@@ -5,11 +5,13 @@ using UnityEngine;
 public class FollowerEnemyTrigger : Obstacable
 {
     public PlayerData playerData;
+    public GameData gameData;
     internal override void DoAction(PlayerTrigger player)
     {
         if(!playerData.isInvulnerable)
         {
-            Debug.Log("DAMAGE TO PLAYER");
+            gameData.RemainingTime-=20;
+            Debug.Log("TIME DECREASE");
         }
     }
 }
