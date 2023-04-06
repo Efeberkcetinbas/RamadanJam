@@ -33,11 +33,31 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
 
     public GameData gameData;
 
+    [SerializeField] private bool isTeleporter;
+
+    
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator=GetComponent<Animator>();
+    }
+
+    private void OnEnable() 
+    {
+        EventManager.AddHandler(GameEvent.OnInvulnerable,OnPlayerInvulnerable);
+        EventManager.AddHandler(GameEvent.OnVulnerable,OnPlayerVulnerable);
+        EventManager.AddHandler(GameEvent.OnTimeStop,OnTimeIsStop);
+        EventManager.AddHandler(GameEvent.OnTimeContinue,OnTimeIsContinue);
+        
+    }
+
+    private void OnDisable() 
+    {
+        EventManager.RemoveHandler(GameEvent.OnInvulnerable,OnPlayerInvulnerable);
+        EventManager.RemoveHandler(GameEvent.OnVulnerable,OnPlayerVulnerable);
+        EventManager.RemoveHandler(GameEvent.OnTimeStop,OnTimeIsStop);
+        EventManager.RemoveHandler(GameEvent.OnTimeContinue,OnTimeIsContinue);
     }
 
     private void Update()
@@ -55,6 +75,32 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
+    }
+
+    void OnPlayerInvulnerable()
+    {
+        attackRange=2;
+    }
+
+    void OnPlayerVulnerable()
+    {
+        attackRange=0.5f;
+    }
+
+    void OnTimeIsStop()
+    {
+        animator.SetBool("Idle",true);
+        animator.SetBool("Run",false);
+        animator.SetBool("Attack",false);
+        agent.speed=0;
+    }
+
+    void OnTimeIsContinue()
+    {
+        if(isTeleporter)
+            agent.speed=2;
+        else
+            agent.speed=5;
     }
 
     private void Patroling()

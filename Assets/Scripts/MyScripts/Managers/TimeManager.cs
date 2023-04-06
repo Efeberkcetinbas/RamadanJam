@@ -11,7 +11,7 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-        gameData.RemainingTime=600;
+        gameData.RemainingTime=420;
         gameData.timerIsRunning = true;
     }
 

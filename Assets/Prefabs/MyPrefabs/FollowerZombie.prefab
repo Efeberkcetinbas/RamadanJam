@@ -2676,6 +2676,7 @@ GameObject:
   - component: {fileID: 3686815101377476559}
   - component: {fileID: 3686815101377476558}
   - component: {fileID: 3686815101377476557}
+  - component: {fileID: 2125068626}
   m_Layer: 0
   m_Name: FollowerZombie
   m_TagString: Enemy
@@ -2809,6 +2810,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   gameData: {fileID: 11400000, guid: 73115d221b40b704980a0adf0b128fe6, type: 2}
+  isTeleporter: 0
 --- !u!114 &3686815101377476557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2821,6 +2823,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d5c4abe74693d4ab2482a293a5d94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 9f2f121cb3e332e49bc4eda0458248af, type: 2}
+--- !u!114 &2125068626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780928042425395363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53d3eed67c38fa48b6fd6e3b7f290e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyListControl: {fileID: 0}
+  DeadEffect: {fileID: 110638, guid: 1e9dc57b9c268e84dbb8ede9289e1474, type: 3}
 --- !u!1 &7840205545368497793
 GameObject:
   m_ObjectHideFlags: 0

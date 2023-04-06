@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject StopTime,ContinueTime,SwordActive,SwordDeActive,SpeedUp,SpeedNormal,OnDoor,OfDoor,ShieldActive,ShieldDeactive;
+    [SerializeField] private GameObject StopTime,ContinueTime,FireActive,FireDeActive,SpeedUp,SpeedNormal,OnDoor,OfDoor,ShieldActive,ShieldDeactive;
 
 
     private void OnEnable() 
     {
-        EventManager.AddHandler(GameEvent.OnSwordActive,SwordActiveC);
-        EventManager.AddHandler(GameEvent.OnSwordDeactive,SwordDeActiveC);
+        EventManager.AddHandler(GameEvent.OnFireActive,FireActiveC);
+        EventManager.AddHandler(GameEvent.OnFireDeactive,FireDeActiveC);
         EventManager.AddHandler(GameEvent.OnTimeStop,StopTimeC);
         EventManager.AddHandler(GameEvent.OnTimeContinue,ContinueTimeC);
         EventManager.AddHandler(GameEvent.OnSpeedUp,SpeedUpC);
@@ -24,8 +24,8 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable() 
     {
-        EventManager.RemoveHandler(GameEvent.OnSwordActive,SwordActiveC);
-        EventManager.RemoveHandler(GameEvent.OnSwordDeactive,SwordDeActiveC);
+        EventManager.RemoveHandler(GameEvent.OnFireActive,FireActiveC);
+        EventManager.RemoveHandler(GameEvent.OnFireDeactive,FireDeActiveC);
         EventManager.RemoveHandler(GameEvent.OnTimeStop,StopTimeC);
         EventManager.RemoveHandler(GameEvent.OnTimeContinue,ContinueTimeC);
         EventManager.RemoveHandler(GameEvent.OnSpeedUp,SpeedUpC);
@@ -48,16 +48,16 @@ public class UIManager : MonoBehaviour
         StartCoroutine(ActivityLoss(ContinueTime));
     }
 
-    void SwordActiveC()
+    void FireActiveC()
     {
-        SwordActive.SetActive(true);
-        StartCoroutine(ActivityLoss(SwordActive));
+        FireActive.SetActive(true);
+        StartCoroutine(ActivityLoss(FireActive));
     }
 
-    void SwordDeActiveC()
+    void FireDeActiveC()
     {
-        SwordDeActive.SetActive(true);
-        StartCoroutine(ActivityLoss(SwordDeActive));
+        FireDeActive.SetActive(true);
+        StartCoroutine(ActivityLoss(FireDeActive));
     }
 
     void SpeedUpC()

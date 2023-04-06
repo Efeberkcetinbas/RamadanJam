@@ -20,7 +20,8 @@ public class DiceManager : MonoBehaviour
 
     private void MakeRandomDice()
     {
-        index=Random.Range(0,5);
+        //index=Random.Range(0,5);
+        index=0;
         EventManager.Broadcast(GameEvent.OnBuffActive);
         switch(index)
         {
@@ -28,7 +29,7 @@ public class DiceManager : MonoBehaviour
                 OnStopTime();
                 break;
             case 1:
-                OnSwordActive();
+                OnFireActive();
                 break;
             case 2:
                 OnSpeedUp();
@@ -48,10 +49,10 @@ public class DiceManager : MonoBehaviour
         EventManager.Broadcast(GameEvent.OnTimeStop);
         StartCoroutine(CancelBuff(5,GameEvent.OnTimeContinue));
     }
-    void OnSwordActive()
+    void OnFireActive()
     {
-        EventManager.Broadcast(GameEvent.OnSwordActive);
-        StartCoroutine(CancelBuff(5,GameEvent.OnSwordDeactive));
+        EventManager.Broadcast(GameEvent.OnFireActive);
+        StartCoroutine(CancelBuff(5,GameEvent.OnFireDeactive));
     }
 
     void OnSpeedUp()

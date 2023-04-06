@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0c634d8333adbf4487926aa81ebbfe3, type: 3}
   m_Name: Game Data
   m_EditorClassIdentifier: 
-  RemainingTime: 596.60974
-  timerIsRunning: 0
+  RemainingTime: 571.1666
+  timerIsRunning: 1
+  stopEnemies: 0
+  startBuffTime: 0
+  repeatBuffTime: 0

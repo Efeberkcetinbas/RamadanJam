@@ -12,17 +12,15 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
     private int randomPos;
     
     private float timer;
-    //[SerializeField] private GameObject PortalEffect;
+    [SerializeField] private GameObject PortalEffect;
 
     [SerializeField] private int passedTimer;
 
 
     public GameData gameData;
 
-    //private Animator animator;
     private void Start()
     {
-        //animator=GetComponent<Animator>();
         index=Rooms.Count;   
     }
 
@@ -66,8 +64,8 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
 
     public void PlayParticleEffect()
     {
-        //Instantiate(PortalEffect,new Vector3(Rooms[randomPos].transform.position.x,
-        //Rooms[randomPos].transform.position.y+1,Rooms[randomPos].transform.position.z),Rooms[randomPos].transform.rotation);
+        Instantiate(PortalEffect,new Vector3(Rooms[randomPos].transform.position.x,
+        Rooms[randomPos].transform.position.y+1,Rooms[randomPos].transform.position.z),Rooms[randomPos].transform.rotation);
     }
 
     

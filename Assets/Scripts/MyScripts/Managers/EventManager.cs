@@ -6,8 +6,8 @@ using System;
 public enum GameEvent
 {
     //Buffs
-    OnSwordActive,
-    OnSwordDeactive,
+    OnFireActive,
+    OnFireDeactive,
     OnInvulnerable,
     OnVulnerable,
     OnSpeedUp,
