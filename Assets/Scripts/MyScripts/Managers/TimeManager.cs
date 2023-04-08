@@ -2,17 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class TimeManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
     public GameData gameData;
 
-
+    private bool oneTime=false;
     void Start()
     {
-        gameData.RemainingTime=600;
-        gameData.timerIsRunning = true;
+        gameData.RemainingTime=900;
+        
+    }
+
+    private void OnEnable() 
+    {
+        EventManager.AddHandler(GameEvent.OnPlayerHurt,ScaleUpText);
+    }
+
+    private void OnDisable() 
+    {
+        EventManager.RemoveHandler(GameEvent.OnPlayerHurt,ScaleUpText);
+    }
+
+    void ScaleUpText()
+    {
+        timeText.transform.DOScale(new Vector3(1.5f,1.5f,1.5f),0.25f).OnComplete(()=>timeText.transform.DOScale(new Vector3(1,1,1),0.25f));
     }
 
     void Update()
@@ -27,13 +43,13 @@ public class TimeManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Time has run out!");
                 gameData.RemainingTime = 0;
                 gameData.timerIsRunning = false;
                 DisplayTime(gameData.RemainingTime);
-                EventManager.Broadcast(GameEvent.OnDeath);
                 Time.timeScale = 0f;
-                EventManager.Broadcast(GameEvent.OnDeath);
+                oneTime=true;
+                if(oneTime)
+                    EventManager.Broadcast(GameEvent.OnDeath);
                 //bu durumda ise ana menuye dönücek.
             }
         }

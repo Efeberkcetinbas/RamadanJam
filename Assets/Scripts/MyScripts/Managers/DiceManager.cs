@@ -21,7 +21,7 @@ public class DiceManager : MonoBehaviour
     private void MakeRandomDice()
     {
         index=Random.Range(0,5);
-        EventManager.Broadcast(GameEvent.OnBuffActive);
+        //EventManager.Broadcast(GameEvent.OnBuffActive);
         switch(index)
         {
             case 0:
@@ -46,30 +46,30 @@ public class DiceManager : MonoBehaviour
     void OnStopTime()
     {
         EventManager.Broadcast(GameEvent.OnTimeStop);
-        StartCoroutine(CancelBuff(25,GameEvent.OnTimeContinue));
+        StartCoroutine(CancelBuff(45,GameEvent.OnTimeContinue));
     }
     void OnFireActive()
     {
         EventManager.Broadcast(GameEvent.OnFireActive);
-        StartCoroutine(CancelBuff(25,GameEvent.OnFireDeactive));
+        StartCoroutine(CancelBuff(45,GameEvent.OnFireDeactive));
     }
 
     void OnSpeedUp()
     {
         EventManager.Broadcast(GameEvent.OnSpeedUp);
-        StartCoroutine(CancelBuff(25,GameEvent.OnSpeedNormal));
+        StartCoroutine(CancelBuff(45,GameEvent.OnSpeedNormal));
     }
 
     void OnPassThroughDoors()
     {
         EventManager.Broadcast(GameEvent.OnPassThroughDoors);
-        StartCoroutine(CancelBuff(25,GameEvent.OnNotPasThroughDoors));
+        StartCoroutine(CancelBuff(45,GameEvent.OnNotPasThroughDoors));
     }
 
     void OnInvulnerable()
     {
         EventManager.Broadcast(GameEvent.OnInvulnerable);
-        StartCoroutine(CancelBuff(25,GameEvent.OnVulnerable));
+        StartCoroutine(CancelBuff(45,GameEvent.OnVulnerable));
     }
 
     private IEnumerator CancelBuff(float time,GameEvent gameEvent)

@@ -9,4 +9,5 @@ public class GameData : ScriptableObject
     public bool timerIsRunning=false;
     public bool stopEnemies=false;
     public int startBuffTime,repeatBuffTime;
+    public int StarNumber=0;
 }

@@ -17,6 +17,7 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
     private List<string> resetParameters=new List<string>();
 
 
+
     //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -49,6 +50,7 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         EventManager.AddHandler(GameEvent.OnVulnerable,OnPlayerVulnerable);
         EventManager.AddHandler(GameEvent.OnTimeStop,OnTimeIsStop);
         EventManager.AddHandler(GameEvent.OnTimeContinue,OnTimeIsContinue);
+        EventManager.AddHandler(GameEvent.OnSuccess,GameEnd);
         
     }
 
@@ -58,6 +60,7 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         EventManager.RemoveHandler(GameEvent.OnVulnerable,OnPlayerVulnerable);
         EventManager.RemoveHandler(GameEvent.OnTimeStop,OnTimeIsStop);
         EventManager.RemoveHandler(GameEvent.OnTimeContinue,OnTimeIsContinue);
+        EventManager.RemoveHandler(GameEvent.OnSuccess,GameEnd);
     }
 
     private void Update()
@@ -72,9 +75,13 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if(gameData.timerIsRunning)
+        {
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        }
+        
     }
 
     void OnPlayerInvulnerable()
@@ -85,6 +92,14 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
     void OnPlayerVulnerable()
     {
         attackRange=0.5f;
+    }
+
+    void GameEnd()
+    {
+        animator.SetBool("Idle",true);
+        animator.SetBool("Run",false);
+        animator.SetBool("Attack",false);
+        agent.speed=0;
     }
 
     void OnTimeIsStop()
@@ -98,7 +113,7 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
     void OnTimeIsContinue()
     {
         if(isTeleporter)
-            agent.speed=2;
+            agent.speed=4;
         else
             agent.speed=5;
     }
@@ -116,6 +131,8 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
+       
+        
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
@@ -139,6 +156,8 @@ public class FollowerEnemyMovement : MonoBehaviour,IEnemyMovement
         animator.SetBool("Run",true);
         animator.SetBool("Attack",false);
         animator.SetBool("Idle",false);
+        
+        
     }
 
     private void AttackPlayer()

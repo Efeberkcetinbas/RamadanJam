@@ -73,18 +73,7 @@ public class TeleporterEnemyMovement : MonoBehaviour, IEnemyMovement
 
     private int RandomPos()
     {
-        //Bazen surekli ayni konum uzerinde donuyor. Random yerine index arttir.
-        /*if(index<Rooms.Count-1)
-        {
-            index++;
-        }
-        else
-        {
-            index=0;
-        }*/
         randomPos=Random.Range(0,index);
-        //randomPos=index;
-        Debug.Log(randomPos);
         return randomPos;
     }
 

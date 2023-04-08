@@ -7,14 +7,21 @@ public class SwordTrigger : MonoBehaviour
 
     public EnemyListControl enemyListControl;
     public GameObject DeadEffect;
+    private bool inEnemyList=false;
     private void OnTriggerEnter(Collider other) 
     {
         if(other.CompareTag("Sword"))
         {
-            Debug.Log("ENEMY IS DEAD");
             Instantiate(DeadEffect,transform.position,Quaternion.identity);
+            enemyListControl.deadSound.Play();
             //Particle
-            enemyListControl.Enemies.Add(gameObject);
+            if(!inEnemyList)
+            {
+                enemyListControl.Enemies.Add(gameObject);
+                inEnemyList=true;
+            }
+
+
             enemyListControl.StartCoroutine(enemyListControl.ActiveEnemy());
             gameObject.SetActive(false);
         }

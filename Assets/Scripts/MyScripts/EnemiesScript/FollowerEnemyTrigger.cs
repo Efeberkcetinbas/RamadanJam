@@ -10,8 +10,8 @@ public class FollowerEnemyTrigger : Obstacable
     {
         if(!playerData.isInvulnerable)
         {
-            gameData.RemainingTime-=20;
-            Debug.Log("TIME DECREASE");
+            gameData.RemainingTime-=30;
+            EventManager.Broadcast(GameEvent.OnPlayerHurt);
         }
     }
 }

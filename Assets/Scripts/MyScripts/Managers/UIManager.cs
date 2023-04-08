@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject StopTime,ContinueTime,FireActive,FireDeActive,SpeedUp,SpeedNormal,OnDoor,OfDoor,ShieldActive,ShieldDeactive;
 
+    public TextMeshProUGUI starCounter;
+
+    public GameData gameData;
 
     private void OnEnable() 
     {
@@ -19,6 +23,7 @@ public class UIManager : MonoBehaviour
         EventManager.AddHandler(GameEvent.OnNotPasThroughDoors,OffDoorC);
         EventManager.AddHandler(GameEvent.OnInvulnerable,ShieldActiveC);
         EventManager.AddHandler(GameEvent.OnVulnerable,ShieldDeactiveC);
+        EventManager.AddHandler(GameEvent.OnStarCollect,UpdateUI);
         
     }
 
@@ -34,6 +39,12 @@ public class UIManager : MonoBehaviour
         EventManager.RemoveHandler(GameEvent.OnNotPasThroughDoors,OffDoorC);
         EventManager.RemoveHandler(GameEvent.OnInvulnerable,ShieldActiveC);
         EventManager.RemoveHandler(GameEvent.OnVulnerable,ShieldDeactiveC);
+        EventManager.RemoveHandler(GameEvent.OnStarCollect,UpdateUI);
+    }
+
+    void UpdateUI()
+    {
+        starCounter.SetText(gameData.StarNumber +  " / 55".ToString());
     }
 
     void StopTimeC()

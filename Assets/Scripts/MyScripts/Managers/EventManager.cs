@@ -21,9 +21,11 @@ public enum GameEvent
 
     //Game
     OnDeath,
+    OnPlayerHurt,
     OnSuccess,
-    OnUpdateUI,
     OnCallDice,
+    OnOpenPortal,
+    OnStarCollect,
     
     //Doors
     OnDoorOpen,

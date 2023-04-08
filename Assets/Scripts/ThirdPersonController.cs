@@ -79,6 +79,9 @@ namespace StarterAssets
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
 
+        //MINE
+        public GameData gameData;
+
         // player
         private float _speed;
         private float _animationBlend;
@@ -156,9 +159,13 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            if(gameData.timerIsRunning)
+            {
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
+            
         }
 
         private void LateUpdate()

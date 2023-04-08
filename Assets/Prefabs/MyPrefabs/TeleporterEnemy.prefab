@@ -821,6 +821,7 @@ GameObject:
   - component: {fileID: 2527585777426113586}
   - component: {fileID: 2527585777417112546}
   - component: {fileID: 2527585777426513536}
+  - component: {fileID: 8821084084437037695}
   - component: {fileID: 2527585777426513563}
   - component: {fileID: 2527585777426513564}
   - component: {fileID: 2527585777426513565}
@@ -883,6 +884,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.95405304, y: 1.6625577, z: 0.9277978}
   m_Center: {x: -0.022973478, y: 0.8150644, z: 0.036101103}
+--- !u!65 &8821084084437037695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527585777426610258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.95405304, y: 1.6625577, z: 0.9277978}
+  m_Center: {x: -0.022973478, y: 0.8150644, z: 0.036101103}
 --- !u!114 &2527585777426513563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,7 +928,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -968,7 +982,7 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   gameData: {fileID: 11400000, guid: 73115d221b40b704980a0adf0b128fe6, type: 2}
-  isTeleporter: 0
+  isTeleporter: 1
 --- !u!114 &2527585777426513567
 MonoBehaviour:
   m_ObjectHideFlags: 0

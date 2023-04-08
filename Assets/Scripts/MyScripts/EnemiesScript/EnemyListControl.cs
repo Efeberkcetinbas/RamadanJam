@@ -6,6 +6,8 @@ public class EnemyListControl : MonoBehaviour
 {
     public List<GameObject> Enemies=new List<GameObject>();
 
+    public AudioSource deadSound;
+
     private float lifeTime;
     public IEnumerator ActiveEnemy()
     {

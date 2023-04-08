@@ -7,12 +7,17 @@ using DG.Tweening;
 public class AutomaticDoor : DoorButtonControl
 {
     [SerializeField] private int ID;
+
+    [SerializeField] private GameObject leftDoor,rightDoor;
+
+    [SerializeField] private float leftZ,leftOldZ,rightZ,rightOldZ,duration;
+
     internal override void OpenDoorButton(int id)
     {
         if(id==this.ID)
         {
-            Debug.Log("DOOR IS OPEN");
-            transform.DOLocalMoveY(3,0.3f);
+            leftDoor.transform.DOLocalMoveZ(leftZ,duration);
+            rightDoor.transform.DOLocalMoveZ(rightZ,duration);
         }
     }
 
@@ -20,8 +25,8 @@ public class AutomaticDoor : DoorButtonControl
     {
         if(id==this.ID)
         {
-            transform.DOLocalMoveY(0,0.3f);
-            Debug.Log("DOOR IS CLOSED");
+            leftDoor.transform.DOLocalMoveZ(leftOldZ,duration);
+            rightDoor.transform.DOLocalMoveZ(rightOldZ,duration);
         }
     }
 }

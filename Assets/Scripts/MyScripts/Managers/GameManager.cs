@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameData gameData;
+    public PlayerData playerData;
 
     public Material SpecialMat,NormalMat;
 
-    public GameObject GameOverPanel,SuccessPanel;
+    public GameObject GameOverPanel,SuccessPanel,Portal;
     private void Start() 
     {
-        InvokeRepeating("CallDice",0,30);
+        InvokeRepeating("CallDice",0,50);
 
         Reset();
     }
@@ -20,12 +20,14 @@ public class GameManager : MonoBehaviour
     {
         EventManager.AddHandler(GameEvent.OnDeath,GameOver);
         EventManager.AddHandler(GameEvent.OnSuccess,OpenSuccess);
+        EventManager.AddHandler(GameEvent.OnOpenPortal,OpenPortal);
     }
 
     private void OnDisable() 
     {
         EventManager.RemoveHandler(GameEvent.OnDeath,GameOver);
         EventManager.RemoveHandler(GameEvent.OnSuccess,OpenSuccess);
+        EventManager.RemoveHandler(GameEvent.OnOpenPortal,OpenPortal);
     }
 
     private void CallDice()
@@ -36,8 +38,11 @@ public class GameManager : MonoBehaviour
     private void Reset()
     {
         gameData.stopEnemies=false;
+        playerData.isInvulnerable=false;
         GameOverPanel.SetActive(false);
         SuccessPanel.SetActive(false);
+        Portal.SetActive(false);
+        gameData.StarNumber=0;
     }
 
     private void GameOver()
@@ -45,13 +50,15 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(true);
     }
 
-    public void Restart()
-    {
-        SceneManager.LoadScene(0);
-    }
 
     private void OpenSuccess()
     {
+        gameData.timerIsRunning=false;
         SuccessPanel.SetActive(true);
+    }
+
+    private void OpenPortal()
+    {
+        Portal.SetActive(true);
     }
 }

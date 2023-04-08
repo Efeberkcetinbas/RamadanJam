@@ -16,6 +16,10 @@ public class PlayerBuff : MonoBehaviour
     public ParticleSystem timeStopParticle;
     public GameObject shieldParticle;
 
+    public Material NormalMat,WallMat;
+
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+
 
     private void OnEnable() 
     {
@@ -61,36 +65,34 @@ public class PlayerBuff : MonoBehaviour
 
     void OnFireActive()
     {
-        Debug.Log("FIRE ACTIVE");
+        thirdPersonController.SprintSpeed=5;
         fireParticle.SetActive(true);
-        fireParticle.transform.DOScale(new Vector3(4,4,4),0.4f).OnComplete(()=>fireParticle.transform.DOScale(new Vector3(2,2,2),0.5f));
+        fireParticle.transform.DOScale(new Vector3(4,4,4),2f).OnComplete(()=>fireParticle.transform.DOScale(new Vector3(1,1,1),2));
         playerData.isInvulnerable=true;
         //ParticleEffect
     }
 
     void OnInvulnerable()
     {
-        Debug.Log("SHIELD ACTIVE");
         shieldParticle.SetActive(true);
         playerData.isInvulnerable=true;
     }
 
     void OnSpeedUp()
     {
-        Debug.Log("SPEED UP!");
         for (int i = 0; i < speedUpParticle.Length; i++)
         {
             speedUpParticle[i].gameObject.SetActive(true);
             speedUpParticle[i].Play();
         }
-        thirdPersonController.SprintSpeed=25;
+        thirdPersonController.SprintSpeed=15;
         playerData.isInvulnerable=true;
         
     }
 
     void OnPassThroughDoors()
     {
-        Debug.Log("PASS THROUGH DOORS");
+        meshRenderer.material=WallMat;
         for (int i = 0; i < SpecialWalls.Count; i++)
         {
             SpecialWalls[i].convex=true;
@@ -100,18 +102,17 @@ public class PlayerBuff : MonoBehaviour
 
     void OnTimeStop()
     {
-        Debug.Log("TIME IS STOP");
         timeStopParticle.Play();
         gameData.stopEnemies=true;
     }
 
     void OnFireDeactive()
     {
-        Debug.Log("FIRE DEACTIVE");
         fireParticle.transform.DOScale(new Vector3(0.1f,0.1f,0.1f),0.2f).OnComplete(()=>{
             fireParticle.SetActive(false);
         });
         playerData.isInvulnerable=false;
+        thirdPersonController.SprintSpeed=6;
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }
 
@@ -119,26 +120,24 @@ public class PlayerBuff : MonoBehaviour
     {
         playerData.isInvulnerable=false;
         shieldParticle.SetActive(false);
-        Debug.Log("SHIELD DEACTIVE");
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
     }
 
     void OnSpeedNormal()
     {
-        Debug.Log("SPEED NORMAL");
         for (int i = 0; i < speedUpParticle.Length; i++)
         {
             speedUpParticle[i].gameObject.SetActive(false);
             speedUpParticle[i].Stop();
         }
-        thirdPersonController.SprintSpeed=10;
+        thirdPersonController.SprintSpeed=6;
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
         playerData.isInvulnerable=false;
     }
 
     void OnPassNotThroughDoors()
     {
-        Debug.Log("NOT PASS THROUGH DOORS");
+        meshRenderer.material=NormalMat;
         for (int i = 0; i < SpecialWalls.Count; i++)
         {
             SpecialWalls[i].isTrigger=false;
@@ -149,7 +148,6 @@ public class PlayerBuff : MonoBehaviour
 
     void OnTimeContinue()
     {
-        Debug.Log("TIME IS CONTINUE");
         EventManager.Broadcast(GameEvent.OnBuffDeactive);
         timeStopParticle.Stop();
         gameData.stopEnemies=false;
